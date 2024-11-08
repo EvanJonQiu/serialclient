@@ -14,9 +14,13 @@ SerialClient::SerialClient(QWidget *parent)
         ui->cbPort->addItem(info.portName());
     }
 
+    ui->cbBaudRate->addItem("1200", QSerialPort::Baud1200);
+    ui->cbBaudRate->addItem("2400", QSerialPort::Baud2400);
     ui->cbBaudRate->addItem("4800", QSerialPort::Baud4800);
     ui->cbBaudRate->addItem("9600", QSerialPort::Baud9600);
     ui->cbBaudRate->addItem("19200", QSerialPort::Baud19200);
+    ui->cbBaudRate->addItem("38400", QSerialPort::Baud38400);
+    ui->cbBaudRate->addItem("57600", QSerialPort::Baud57600);
     ui->cbBaudRate->addItem("115200", QSerialPort::Baud115200);
     ui->cbBaudRate->setCurrentIndex(3);
 
@@ -120,8 +124,12 @@ void SerialClient::on_btnSend_clicked()
 {
     if (this->serialPort != NULL && this->serialPort->isOpen()) {
         QString cmd = ui->ctrlInput->text();
+        if (cmd.isEmpty()) {
+            return;
+        }
         cmd.append("\r\n");
         this->serialPort->write(cmd.toStdString().c_str());
+        ui->ctrlInput->setText("");
     }
 }
 
