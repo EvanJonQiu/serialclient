@@ -168,7 +168,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>接受数据</string>
+    <string>接收数据</string>
    </property>
    <widget class="QPlainTextEdit" name="ctrlReceiveEdit">
     <property name="geometry">
