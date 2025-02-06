@@ -42,6 +42,14 @@ SerialClient::SerialClient(QWidget *parent)
     ui->cbParity->addItem("mark", QSerialPort::MarkParity);
     ui->cbParity->setCurrentIndex(0);
 
+    // Set fixed width for all comboboxes
+    int fixedWidth = 150; // Adjust this value as needed
+    ui->cbPort->setFixedWidth(fixedWidth);
+    ui->cbBaudRate->setFixedWidth(fixedWidth);
+    ui->cbCharacterSize->setFixedWidth(fixedWidth);
+    ui->cbStopBits->setFixedWidth(fixedWidth);
+    ui->cbParity->setFixedWidth(fixedWidth);
+
     ui->btnSend->setEnabled(false);
     ui->ctrlInput->setDisabled(true);
     ui->ctrlReceiveEdit->setReadOnly(true);
@@ -78,6 +86,8 @@ void SerialClient::on_btnOpenPort_clicked()
 
                 connect(this->serialPort, SIGNAL(readyRead()), this, SLOT(receiveMessage()));
             } else {
+                delete this->serialPort;
+                this->serialPort = NULL;
                 QMessageBox::critical(this, "提示", "失败");
             }
         }
